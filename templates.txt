@@ -1,22 +1,55 @@
 // Bellman Ford
-void bellmanFord(ll src, ll n) {
-    for (ll i = 0; i <= n; i++) dist[i] = inf; // doing from i = 0; i <= n; can handle both 0 & 1 based indexing
+const ll mx = 2510;
+vector<tuple<ll, ll, ll>> edges;
+ll dist[mx], par[mx];
+vector<ll> bellmanFord(ll src, ll n) {
+    vector<ll> path;
+
+    for (ll i = 0; i <= n; i++) {
+        dist[i] = inf;
+        par[i] = -1;
+    }
     dist[src] = 0;
-    // ll cnt = 0; // just check with or without that bool how many times run
+
     for (ll i = 1; i <= n - 1; i++) {
-        bool notRelaxed = true; // optimization 
+        bool relaxed = 0;
         for (const auto &e : edges) {
-            ll u, v, w;
+            ll u, v, w; 
             tie(u, v, w) = e;
             if (dist[v] > dist[u] + w) {
-                dist[v] = dist[u] + w;
-                notRelaxed = false;
+                dist[v] = max(-inf, dist[u] + w);
+                par[v] = u;
+                relaxed = 1;
             }
-            // ++cnt;
         }
-        if (notRelaxed) break;
+        if (!relaxed) break;
     }
-    // cout << cnt << endl;
+
+    ll x = -1;    
+    for (const auto &e : edges) {
+        ll u, v, w; 
+        tie(u, v, w) = e;
+        if (dist[v] > dist[u] + w) {
+            dist[v] = max(-inf, dist[u] + w);
+            par[v] = u;
+            x = v;
+        }
+    }
+    if (x == -1) return path;
+
+    for (ll i = 1; i <= n; i++) {
+        x = par[x];
+    }
+
+    ll y = x; dbg(y);
+    while (y != x || sz(path) == 0) {
+        path.push_back(y);
+        y = par[y];
+    }
+    path.push_back(x);
+    reverse(all(path));
+
+    return path;
 }
 
 // Floyd
@@ -39,40 +72,78 @@ void floydWarshall() { // No need to clear the dist because when looping nxn alr
 
 
 // Dijkstra
-class Solution {
-public:
-    vector<int> dijkstra(int V, vector<vector<int>> &edges, int src) {
-        vector<pair<int, int>> adj[V];
-        for (auto &u : edges) {
-            adj[u[0]].push_back({u[1], u[2]});
-            adj[u[1]].push_back({u[0], u[2]});
-        }
-        
-        vector<int> dist(V, INT_MAX);
-        dist[src] = 0;
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, src});
+vector<vector<pair<ll, ll>>> adj;
+vector<ll> dist, parent;
 
-        while (!pq.empty()) {
-            int dis = pq.top().first;
-            int node = pq.top().second;
-            pq.pop();
+void dijkstra(ll src, ll n) {
+    dist.assign(n + 1, inf);
+    parent.assign(n + 1, -1);
 
-            for (auto &u : adj[node]) {
-                int adjNode = u.first;
-                int weight = u.second;
+    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
+    dist[src] = 0;
+    parent[src] = -1;
+    pq.push({0ll, src});
 
-                if (dis + weight < dist[adjNode]) {
-                    dist[adjNode] = dis + weight;
-                    pq.push({dist[adjNode], adjNode});
-                }
+    while (!pq.empty()) {
+        auto [d, u] = pq.top(); pq.pop();
+        if (dist[u] < d) continue;
+
+        for (auto &[v, w] : adj[u]) {
+            if (dist[v] > d + w) {
+                dist[v] = d + w;
+                parent[v] = u;
+                pq.push({dist[v], v});
             }
         }
-
-        return dist;
     }
-};
+}  
+void get_Path(ll des) {
+    if (dist[des] == inf) cout << -1 << endl;
+    else {
+        vector<ll> res;
+        ll cur = des;
+        while (cur != -1) {
+            res.push_back(cur);
+            cur = parent[cur];
+        }
+        reverse(all(res));
+        for (ll &i : res) cout << i << ' ';
+        cout << endl;
+    }
+}
 // Dijkstra with a priority queue: O((V + E) logV). [This is the standard. CONSIDER THIS!!]
+
+// topologicalSort
+//const ll mx = 1e5+123;
+//vector<ll> indeg(mx);
+//vector<ll> adj[mx];
+//bool vis[mx];
+//
+//ll topologicalSort() {
+//    vector<ll> z;
+//    for (ll i = 1; i <= n; i++) {
+//        if (indeg[i] == 0) {
+//            z.push_back(i);
+//            vis[i] = 1;
+//        }
+//    } 
+//    vector<ll> ans;
+//    while (sz(ans) < n) {
+//        if (z.empty()) return -1;
+//
+//        ll cur = z.back(); 
+//        z.pop_back();
+//        ans.push_back(cur);
+//        for (const ll &v : adj[cur]) {
+//            --indeg[v];
+//            if (!vis[v] && indeg[v] == 0) {
+//                z.push_back(v);
+//                vis[v] = 1;
+//            }
+//        }
+//    }
+//    return ans;
+//}
 
 
 // BS Unidominal
