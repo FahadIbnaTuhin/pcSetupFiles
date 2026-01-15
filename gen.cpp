@@ -27,16 +27,119 @@ int main() {
     // freopen("in.txt", "w", stdout);
 
     // b
-    ll t = gen_random(1, 1);
-    // cout << t << endl; 
+    ll t = 1;
+    // t = gen_random(1, 10);
+    cout << t << endl; 
 
     while (t--) {
-        ll n = gen_random(3, 8), s = gen_random(3, 10);
-        cout << n << ' ' << s << endl; 
+        // ll n = gen_random(1, 7), l = gen_random(1, n), r = gen_random(l, n);
+        // cout << n << ' ' << l <<  ' ' << r << endl;
 
-        for (ll i = 0; i < n; i++) cout << gen_random(1, 10) << ' ';
-        cout << endl;
+        ll n = gen_random(1, 6), m = gen_random(1, 6), sx = gen_random(1, n), sy = gen_random(1, m);
+        ll d = gen_random(1, 3);
+        cout << n << ' ' << m << ' ' << sx << ' ' << sy << ' ' << d << endl;
+
+        // ll l = gen_random(1, 19), r = gen_random(l + 1, 20), a = gen_random(1, 20);
+        // cout << l << ' ' << r << ' ' << a << endl;
+
+        // ll n = gen_random(1, 8), x = gen_random(1, 20);
+        // cout << n << ' ' << x << endl;
+
+        // for (ll i = 0; i < n; i++) cout << gen_random(1, 10) << ' ';
+        // cout << endl;
+        // for (ll i = 0; i < n; i++) cout << gen_random(1, 10) << ' ';
+        // cout << endl;
     }
+
+    // while (t--) {
+    //     ll n = gen_random(1, 10); 
+    //     while (n % 2) n = gen_random(1, 10);
+
+    //     ll a = gen_random(1, n), b = gen_random(1, n);
+
+    //     while (a == b) {
+    //         b = gen_random(1, n);
+    //     }
+
+    //     cout << n << ' ' << a << ' ' << b << endl; 
+
+    //     // for (ll i = 0; i < 2 * n; i++) cout << gen_random(1, 2 * n) << ' ';
+    //     // cout << endl;
+    // }
+
+    // while (t--) {
+    //     ll n = gen_random(2, 10);
+    //     while (n & 1) {
+    //         n = gen_random(2, 10);           
+    //     }
+
+    //     for (ll i = 0; i < n; i++) {
+    //         for (ll j = 0; j < 5; j++) cout << gen_random(0, 1) << ' ';
+    //         cout << endl;
+    //     }
+    // }
+
+    //  while (t--) {
+    //     ll n = gen_random(1, 13);
+
+    //     for (ll i = 0; i < n; i++) cout << gen_random(0, 1);
+    //     cout << endl;
+    // }
+
+    // while (t--) {
+    //     ll n = gen_random(1, 15);
+    //     cout << n << endl;
+        
+    //     for (ll i = 0; i < n; i++) cout << char('a' + gen_random(0, 25));
+    //     cout << endl;
+
+    //     // for (ll i = 0; i < n; i++) {
+    //     //     if (gen_random(0, 1)) { // 1
+    //     //         cout << gen_random(1, 25) << ' ';
+    //     //     } else {
+    //     //         cout << -1 << ' ';
+    //     //     }
+    //     // }
+    //     // cout << endl;
+    // }
+    // ll t = gen_random(5, 10);
+    // cout << t << '\n';
+    // while (t--) {
+    //     ll n = gen_random(10, 50);
+    //     ll d = gen_random(1, n - 1);
+    //     ll s = gen_random(1, n);
+    //     cout << n << ' ' << d << ' ' << s << '\n';
+    // }
+
+    // ll t = gen_random(5, 10);
+    // cout << t << '\n';
+    // for (int i = 0; i < t; i++) {
+    //     ll s = gen_random(5, 10);
+    //     ll t = gen_random(5, 15);
+    //     for (int i = 0; i < s; i++) {
+    //         char c = 'a' + gen_random(0, 25);
+    //         cout << c;
+    //     }
+    //     cout << '\n';
+        
+    //     for (int i = 0; i < t; i++) {
+    //         char c = 'a' + gen_random(0, 25);
+    //         cout << c;
+    //     }
+    //     cout << "\n\n";
+    // }
+
+    // ll t = gen_random(10, 10);
+    // cout << t << '\n';
+    // for (int i = 0; i < t; i++) {
+    //     ll n = gen_random(2, 7);
+    //     cout << n << endl;
+
+    //     for (int i = 0; i < n; i++) {
+    //         cout << gen_random(2, 10) << ' ';
+    //     }
+    //     cout << endl;
+    // }
 
     return 0;
 }

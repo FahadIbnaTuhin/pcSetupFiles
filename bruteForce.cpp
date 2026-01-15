@@ -1,8 +1,3 @@
-/* 
-    In the name of ALLAH
-    Believe Yourself
-    Compete against Yourself
-*/
 #include <bits/stdc++.h> 
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
@@ -20,71 +15,155 @@ template <typename T, typename P = null_type> using pbds = tree<T, P, less<T>, r
 #define mod 1000000007
 #define pb push_back
 #define ppb pop_back
-#define ff first
-#define ss second
+#define xx first
+#define yy second
+#define mp make_pair
 const ll inf = LLONG_MAX >> 1;
 const double pi = acos(-1.0);
 const double eps = 1e-9;
- 
-void debug(const vector<ll> &v) {for(const ll &x: v) {cout << x << ' ';} cout << endl;}
-template<typename T>void o(const T& x, bool space = true) {cout << x;if (space) cout << endl;}
-template<typename F,typename S>ostream&operator<<(ostream&os,const pair<F,S>&p){return os<<"("<<p.first<<", "<<p.second<<")";}
-template<typename T>ostream&operator<<(ostream&os,const vector<T>&v){os<<"{";for(auto it=v.begin();it!=v.end();++it){if(it!=v.begin())os<<", ";os<<*it;}return os<<"}";}
-template<typename T>ostream&operator<<(ostream&os,const set<T>&v){os<<"[";for(auto it=v.begin();it!=v.end();++it){if(it!=v.begin())os<<",";os<<*it;}return os<<"]";}
-template<typename T>ostream&operator<<(ostream&os,const multiset<T>&v) {os<<"[";for(auto it=v.begin();it!=v.end();++it){if(it!=v.begin())os<<", ";os<<*it;}return os<<"]";}
-template<typename F,typename S>ostream&operator<<(ostream&os,const map<F,S>&v){os<<"[";for(auto it=v.begin();it!=v.end();++it){if(it!=v.begin())os<<", ";os<<it->first<<" = "<<it->second;}return os<<"]";}
-template<typename T, typename C, typename Comp> ostream& operator<<(ostream& os, priority_queue<T, C, Comp> pq){os<<"[";while(!pq.empty()){os<<pq.top();pq.pop();if(!pq.empty())os<<", ";}return os<<"]";}
-template<typename T, typename Compare> ostream& operator<<(ostream& os, const tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics_node_update>& t) {os << "[";for (auto it = t.begin(); it != t.end(); ++it) {if (it != t.begin()) os << ", ";os << *it;}return os << "]";}
-#define dbg(args...) do {cerr << #args << " : "; faltu(args); } while(0)
-void faltu(){cerr << endl;}
-template<typename T>void faltu(T a[],ll n){for(ll i=0;i<n;++i)cerr<<a[i]<<' ';cerr<<endl;}
-template<typename T,typename...hello>void faltu(T arg,const hello&...rest){cerr<<arg<<' ';faltu(rest...);}
 
-inline void normal(ll &a) { a %= mod; (a < 0) && (a += mod); }
-inline ll modMul(ll a, ll b) { a %= mod, b %= mod; normal(a), normal(b); return (a*b)%mod; }
-inline ll modAdd(ll a, ll b) { a %= mod, b %= mod; normal(a), normal(b); return (a+b)%mod; }
-inline ll modSub(ll a, ll b) { a %= mod, b %= mod; normal(a), normal(b); a -= b; normal(a); return a; }
-inline ll modPow(ll b, ll p) { ll r = 1; while(p) { if(p&1) r = modMul(r, b); b = modMul(b, b); p >>= 1; } return r; }
-inline ll modInverse(ll a) { return modPow(a, mod-2); }
-inline ll modDiv(ll a, ll b) { return modMul(a, modInverse(b)); }
-// If you can't solve a problem with brute force, you likely don't understand it fully yet.
- 
-ll di[] = {0, 1, 0, -1};
-ll dj[] = {1, 0, -1, 0};
-string dir = "RDLU";
- 
- 
- 
-void solve() {
-    ll n, k; cin >> n >> k;
-    vector<ll> a(n);
-    for (ll &i : a) cin >> i;
+ll di[] = {0, 0, -1, 1};
+ll dj[] = {-1, 1, 0, 0}; 
+string dir = "LRUD";
 
-    ll ans = 0;
-    for (ll i = 0; i < n; i++) {
-        unordered_set<ll> us;
-        for (ll j = i; j < n; j++) {
-            us.insert(a[j]);
-            if ((ll)us.size() <= k) { // dbg(i, j);
-                ++ans;
+// void solve() {
+//     ll n, m, sx, sy, d; cin >> n >> m >> sx >> sy >> d;
+//     --sx, --sy;
+
+//     vector<vector<ll>> dp(n, vector<ll>(m, -1));
+//     for (ll i = 0; i < n; i++) {
+//         for (ll j = 0; j < m; j++) {
+//             ll dis = abs(i - sx) + abs(j - sy);
+//             if (dis <= d) dp[i][j] = 0;
+//             // cout << dp[i][j];
+//         }
+//         // cout << endl;
+//     }
+//     if (dp[n - 1][m - 1] == 0) {cout << -1 << endl; return;}
+//     dp[n - 1][m - 1] = 1;
+
+//     for (ll i = m - 2; i >= 0; i--) {
+//         dp[n - 1][i] = (dp[n - 1][i + 1] == 1);
+//     }
+//     for (ll i = n - 2; i >= 0; i--) {
+//         for (ll j = m - 1; j >= 0; j--) {
+//             ll yes = 0;
+//             if (j + 1 < m && dp[i][j + 1] == 1) yes = 1;
+//             if (i + 1 < n && dp[i + 1][j] == 1) yes = 1;
+
+//             dp[i][j] = yes;
+//         }
+//     }
+
+//     if (dp[0][0] == 1) cout << n + m - 2 << endl;
+//     else cout << -1 << endl;
+// }
+
+ll n, m, sx, sy, d; 
+const ll mx = 1e3+123;
+vector<vector<bool>> mark(mx, vector<bool>(mx));
+vector<vector<bool>> vis(mx, vector<bool>(mx));
+ll dp[mx][mx];
+
+void dfs(ll x, ll y) {
+    if (dp[x][y] != -1) return;
+    vis[x][y] = 1;
+    dp[x][y] = 1;
+
+    for (ll j = 0; j < 4; j++) {
+        ll nx = x + di[j];
+        ll ny = y + dj[j];
+
+        // if (nx >= 0 && nx < n && ny >= 0 && ny < m && !mark[nx][ny] && !vis[nx][ny]) {
+        if (nx >= 0 && nx < n && ny >= 0 && ny < m && !vis[nx][ny] && !mark[nx][ny]) {
+            ll dis = abs(nx - sx) + abs(ny - sy);
+
+            if (dis <= d) {
+                mark[nx][ny] = 1;
+                continue;
             }
+            dfs(nx, ny);
+        }
+    }
+}
+
+void solve() {
+    cin >> n >> m >> sx >> sy >> d;
+    --sx, --sy;
+
+    for (ll i = 0; i < n; i++) {
+        for (ll j = 0; j < m; j++) {
+            mark[i][j] = 0;
+            vis[i][j] = 0;
+            dp[i][j] = -1;
         }
     }
 
-    cout << ans << endl;
+    //         ll dis = abs(i - sx) + abs(j - sy);
+    //         if (dis <= d) mark[i][j] = 1;
+    //         // cout << mark[i][j];
+    //     }
+    //     // cout << endl;
+    // }
+    // if (mark[n - 1][m - 1]) {cout << -1 << endl; return;}
+
+    dfs(0, 0);
+
+    // for (ll i = 0; i < n; i++) {
+    //     for (ll j = 0; j < m; j++) {
+    //         cout << mark[i][j];
+    //     }
+    //     cout << endl;
+    // }
+
+    if (vis[n - 1][m - 1]) cout << n + m - 2 << endl;
+    else cout << -1 << endl;
 }
- 
+
+// ll n, m, sx, sy, d; 
+// vector<vector<bool>> mark;
+// vector<vector<bool>> vis;
+
+// void dfs(ll x, ll y) {
+//     vis[x][y] = 1;
+
+//     for (ll j = 0; j < 4; j++) {
+//         ll nx = x + di[j];
+//         ll ny = y + dj[j];
+
+//         if (nx >= 0 && nx < n && ny >= 0 && ny < m && !mark[nx][ny]) {
+//             dfs(nx, ny);
+//         }
+//     }
+// }
+
+// void solve() {
+//     cin >> n >> m >> sx >> sy >> d;
+//     mark.assign(n, vector<bool>(m, 0));
+//     vis.assign(n, vector<bool>(m, 0));
+
+//     for (ll i = 0; i < n; i++) {
+//         for (ll j = 0; j < m; j++) {
+//             ll dis = abs(i - sx) + abs(j - sy);
+//             if (dis <= d) mark[i][j] = 1;
+//             // cout << mark[i][j];
+//         }
+//         // cout << endl;
+//     }
+
+//     dfs(0, 0);
+
+//     if (vis[n - 1][m - 1]) cout << n + m - 2 << endl;
+//     else cout << -1 << endl;
+// }
+
 int main() {
-    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     ll t = 1;
-    // cin >> t;
-    for (ll i = 1; i <= t; i++) {
-        // cout << "Case #" << i << ": "; // cout << "Case " << i << ": ";
+    cin >> t;
+    for (ll tc = 1; tc <= t; tc++) {
         solve();
     }
- 
- 
- 
- 
+
     return 0;
-}
+} 

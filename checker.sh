@@ -1,7 +1,7 @@
 for ((i = 1; ; ++i)); do
     echo $i
     ./gen $i > in.txt
-    diff -w <(./zz < in.txt) <(./bruteForce < in.txt) || break
+    diff -w <(./e < in.txt) <(./bruteForce < in.txt) || break
 done
 
 # This program will run in.txt input to a.cpp and b.cpp. Whenever 

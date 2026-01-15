@@ -20,8 +20,9 @@ template <typename T, typename P = null_type> using pbds = tree<T, P, less<T>, r
 #define mod 1000000007
 #define pb push_back
 #define ppb pop_back
-#define ff first
-#define ss second
+#define xx first
+#define yy second
+#define mp make_pair
 const ll inf = LLONG_MAX >> 1;
 const double pi = acos(-1.0);
 const double eps = 1e-9;
@@ -40,6 +41,11 @@ void faltu(){cerr << endl;}
 template<typename T>void faltu(T a[],ll n){for(ll i=0;i<n;++i)cerr<<a[i]<<' ';cerr<<endl;}
 template<typename T,typename...hello>void faltu(T arg,const hello&...rest){cerr<<arg<<' ';faltu(rest...);}
 
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+inline ll gen_random(ll l, ll r) { return uniform_int_distribution<ll>(l, r)(rng); }
+inline double gen_randomD(double l, double r) { return uniform_real_distribution<double>(l, r)(rng); }
+char gen_random_char(int k) { return 'a' + gen_random(0, k - 1); }
+
 inline void normal(ll &a) { a %= mod; (a < 0) && (a += mod); }
 inline ll modMul(ll a, ll b) { a %= mod, b %= mod; normal(a), normal(b); return (a*b)%mod; }
 inline ll modAdd(ll a, ll b) { a %= mod, b %= mod; normal(a), normal(b); return (a+b)%mod; }
@@ -49,9 +55,9 @@ inline ll modInverse(ll a) { return modPow(a, mod-2); }
 inline ll modDiv(ll a, ll b) { return modMul(a, modInverse(b)); }
 // If you can't solve a problem with brute force, you likely don't understand it fully yet.
  
-ll di[] = {0, 1, 0, -1};
-ll dj[] = {1, 0, -1, 0};
-string dir = "RDLU";
+ll di[] = {0, 0, -1, 1};
+ll dj[] = {-1, 1, 0, 0}; 
+string dir = "LRUD";
  
  
  
@@ -62,6 +68,7 @@ void solve() {
 }
  
 int main() {
+    auto begin = std::chrono::high_resolution_clock::now();
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     ll t = 1;
     cin >> t;
@@ -72,6 +79,8 @@ int main() {
  
  
  
- 
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n"; 
     return 0;
 }
